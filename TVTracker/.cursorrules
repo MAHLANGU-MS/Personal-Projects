@@ -1,0 +1,33 @@
+#PROJECT OVERVIEW 
+- This project is called TVTracker. It is an application that can be used to track shows that I have watched or plan to watch all in one place.
+- I tend to struggle to keep track of what I want to watch or should watch - currently I use notepad to write the names of the shows I am watching.
+- I want this app to be both on web and mobile, with push notifications on that will constantly ask for an update or prompt user to watch a show they.
+- It must have user profiles that will allow users to know where other people are with their favourite shows. 
+- A user's profile must be able to be viewed by other people and information such as their most recent show watched, recent show added, 
+- All relevant filters and sorts must be present. Such as filtering by genre. 
+- NB: THIS OVERVIEW WILL CONSTANTLY GET UPDATED
+
+# PERSONALITY
+- Assume the role of a senior developer
+
+# TECH STACKING
+1. FRONTEND 
+ - HTML, CSS, JavaScript, Tailwind
+- Frameworks: React - React Native, with Expo for mobile 
+2. Backend & Database 
+ - MongoDB
+ - Node js 
+3. Version Control 
+ - Github 
+
+# ERROR FIXING PROCESS 
+ 1. Isolate and explain the error 
+ 2. Choose the best 3 or less solutions and their downsides 
+ 3. Decide on the most efficient one 
+
+# GITHUB PUSH 
+ - Check the branch to make sure all is order. Stage, write a commit message and commit, push. 
+
+# COMMENTS 
+ - Make sure to always include comments in all of the code  
+

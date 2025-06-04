@@ -1,0 +1,173 @@
+/* frontend/src/pages/LandingPage.module.css */
+
+.pageContainer {
+  min-height: 100vh; /* Ensure it takes full viewport height */
+  /* background-color: #f3f4f6; /* Light gray background (similar to Tailwind's gray-100) */
+  /* color: #1f2937; /* Dark gray text (similar to Tailwind's gray-800) */
+  padding: 1rem; /* Similar to p-4 */
+}
+
+@media (min-width: 768px) { /* md breakpoint */
+  .pageContainer {
+    padding: 2rem; /* Similar to md:p-8 */
+  }
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem; /* Similar to mb-12 */
+}
+
+@media (min-width: 768px) { /* md breakpoint */
+  .header {
+    margin-bottom: 4rem; /* Similar to md:mb-16 */
+  }
+}
+
+.header h1 {
+  font-size: 2.25rem; /* Similar to text-4xl */
+  line-height: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem; /* Similar to mb-3 */
+}
+
+@media (min-width: 768px) { /* md breakpoint */
+  .header h1 {
+    font-size: 3rem; /* Similar to md:text-5xl */
+    line-height: 1;
+  }
+}
+
+.header p {
+  font-size: 1.125rem; /* Similar to text-lg */
+  line-height: 1.75rem;
+  /* color: #4b5563; /* Medium gray text (similar to Tailwind's text-gray-600) */
+}
+
+@media (min-width: 768px) { /* md breakpoint */
+  .header p {
+    font-size: 1.25rem; /* Similar to md:text-xl */
+    line-height: 1.75rem;
+  }
+}
+
+.categoriesSection {
+  max-width: 80rem; 
+  margin-left: auto;
+  margin-right: auto;
+  display: grid; /* Use grid layout */
+  gap: 2rem; /* Increased default gap from 1.5rem */
+  /* Default to 1 column for smaller screens */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) { /* md breakpoint - for 2 columns */
+  .categoriesSection {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem; /* Increased md gap from 2rem */
+  }
+}
+
+@media (min-width: 1024px) { /* lg breakpoint - for 3 columns as requested */
+  .categoriesSection {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem; /* Increased lg gap from 2rem */
+  }
+}
+
+.panel {
+  width: 100%; /* Will take the width of the grid cell */
+  height: 20rem; /* Adjusted height for grid - can be tweaked */
+  border-radius: 0.5rem; 
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
+  /* background-color: #a855f7; /* Purple-500 - this will be overridden per card */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center h3 vertically when p is hidden/animating */
+  align-items: center;
+  color: white;
+  padding: 2.5rem; /* Increased padding from 1.5rem to make content area narrower */
+  /* margin-bottom: 2rem; /* REMOVE: Grid gap will handle spacing */
+  text-decoration: none; /* Ensure Link doesn't have underline */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out; /* Smooth transitions */
+  border: 1px solid rgba(255, 255, 255, 0.2); /* Added subtle white border */
+  overflow: hidden; /* Important: Clip the animating paragraph */
+  position: relative; /* Useful for precisely positioning child elements if needed, and for stacking context */
+}
+
+.panel:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-2xl on hover */
+  border-color: rgba(255, 255, 255, 0.5); /* Border becomes more prominent on hover */
+}
+
+
+/* Specific background colors for each panel */
+.psychologyPanel {
+  background-color: #a855f7; /* Purple */
+}
+
+.sportsPanel {
+  background-color: #22c55e; /* Green */
+}
+
+.gamblingPanel {
+  background-color: #f97316; /* Orange */
+}
+.musicPanel {
+  background-color: #987316; /* Brown */
+}
+
+.panel h3 {
+  font-size: 1.875rem; 
+  line-height: 1.2; /* Adjusted line-height for potentially taller Oswald font */
+  font-weight: 700; /* Using a bolder Oswald weight */
+  margin-bottom: 0.5rem; /* Reduce margin slightly to make space for p to animate in */
+  text-align: center;
+  position: relative; /* Ensure h3 stays above p during animation if needed */
+  z-index: 10; /* Keep heading above paragraph */
+  transition: margin-bottom 0.4s ease-out; /* Optional: slightly move h3 on hover */
+  letter-spacing: 0.025em; /* Added subtle letter spacing */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2); /* Added subtle text shadow */
+}
+
+/* Optional: Move h3 up a bit on panel hover to make more room for p */
+.panel:hover h3 {
+  /* margin-bottom: 1.5rem; */ /* Example: or adjust transform */
+}
+
+@media (min-width: 768px) { 
+  .panel h3 {
+    font-size: 2.25rem; 
+    line-height: 1.2;
+    letter-spacing: 0.03em; /* Slightly more spacing for larger font */
+  }
+}
+
+.panel p {
+  font-size: 0.9rem; 
+  line-height: 1.6;
+  text-align: center;
+  font-weight: 500; /* Changed from 400 to 500 for a bit more presence */
+  opacity: 0; /* Initially hidden */
+  transform: translateY(100%); /* Start below the card */
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  /* transition-delay: 0.1s; /* Optional delay for p animation */
+  max-width: 90%; /* Ensure text wraps nicely */
+  position: absolute; /* Position it relative to the panel */
+  bottom: 2.5rem; /* Position it from the bottom of the panel, same as panel padding */
+  left: 5%; /* Center it (100% - 90% / 2) */
+  right: 5%;
+  z-index: 5; /* Below heading */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15); /* Added subtle text shadow */
+}
+
+.panel:hover p {
+  opacity: 1; /* Fade in */
+  transform: translateY(0%); /* Animate to its original intended position */
+  /* If we want it to slide up to a specific point below h3, translateY would be different. */
+  /* For now, it slides up from its absolute bottom position to where it naturally sits based on 'bottom' */
+}
+
+/* For the sm:block behavior, we control visibility in JS or use a different class for smaller screens if needed */
+/* This example keeps the paragraph visible always for simplicity */ 
