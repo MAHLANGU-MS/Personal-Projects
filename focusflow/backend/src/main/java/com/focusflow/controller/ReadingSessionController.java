@@ -6,8 +6,6 @@ import com.focusflow.model.*;
 import com.focusflow.service.ReadingSessionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,12 +19,10 @@ public class ReadingSessionController {
     private final ReadingSessionService sessionService;
 
 
-    @PostMapping("/start")
+    @PostMapping("/{userId}/start")
     public ResponseEntity<ReadingSession> startSession(
-            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable UUID userId,
             @RequestBody CreateSessionRequest request) {
-        // Get user ID from userDetails (implement getUserId method)
-        UUID userId = UUID.randomUUID(); // Replace with actual user ID extraction
         return ResponseEntity.ok(sessionService.startSession(userId, request));
     }
 
@@ -48,10 +44,8 @@ public class ReadingSessionController {
     }
 
 
-    @GetMapping("/analytics")
-    public ResponseEntity<SessionAnalyticsResponse> getAnalytics(
-            @AuthenticationPrincipal UserDetails userDetails) {
-        UUID userId = UUID.randomUUID(); // Replace with actual user ID extraction
+    @GetMapping("/{userId}/analytics")
+    public ResponseEntity<SessionAnalyticsResponse> getAnalytics(@PathVariable UUID userId) {
         return ResponseEntity.ok(sessionService.getSessionAnalytics(userId));
     }
 }
