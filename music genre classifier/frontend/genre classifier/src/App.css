@@ -1,0 +1,146 @@
+/* App.css - Enhanced styles with animations */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Slide in animation */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Apply animations to dynamic content */
+.result-area {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.feedback-box {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Button hover effects */
+button:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:not(:disabled):active {
+  transform: translateY(0);
+}
+
+/* File input custom styling */
+input[type="file"]::file-selector-button {
+  padding: 8px 16px;
+  margin-right: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #0056b3;
+}
+
+/* Text input focus */
+input[type="text"]:focus,
+input[type="file"]:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .container {
+    padding: 12px;
+  }
+  
+  .card {
+    padding: 24px;
+  }
+  
+  .title {
+    font-size: 1.75rem !important;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .feedback-buttons {
+    flex-direction: column;
+  }
+}
+
+/* Accessibility improvements */
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  /* Uncomment to enable dark mode */
+  /*
+  body {
+    background-color: #1a1a1a;
+    color: #e5e7eb;
+  }
+  
+  .card {
+    background-color: #2d2d2d;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  input[type="text"] {
+    background-color: #1a1a1a;
+    color: #e5e7eb;
+    border-color: #4b5563;
+  }
+  */
+}
+
+/* Print styles */
+@media print {
+  button,
+  input[type="file"] {
+    display: none;
+  }
+}
