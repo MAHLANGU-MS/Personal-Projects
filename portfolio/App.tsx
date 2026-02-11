@@ -11,11 +11,68 @@ const App: React.FC = () => {
   const [terminalText, setTerminalText] = useState('');
   const [showCursor, setShowCursor] = useState(true);
   const data = DEFAULT_PORTFOLIO;
+  
+  // Refs for each section
+  const projectsRef = useRef<HTMLElement>(null);
+  const skillsRef = useRef<HTMLElement>(null);
+  const experienceRef = useRef<HTMLElement>(null);
+  
+  // Handle tab click and smooth scrolling
+  const handleTabClick = (tab: 'projects' | 'skills' | 'experience') => {
+    setActiveTab(tab);
+    const refs = {
+      projects: projectsRef,
+      skills: skillsRef,
+      experience: experienceRef
+    };
+    
+    const element = refs[tab].current;
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.pushState(null, '', `#${tab}`);
+    }
+  };
+  
+  // Handle initial hash URL
+  useEffect(() => {
+    const hash = window.location.hash.substring(1);
+    if (['projects', 'skills', 'experience'].includes(hash)) {
+      handleTabClick(hash as 'projects' | 'skills' | 'experience');
+    }
+  }, []);
+  
+  // Handle scroll to update active tab
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100;
+      
+      const sections = [
+        { id: 'projects', ref: projectsRef },
+        { id: 'skills', ref: skillsRef },
+        { id: 'experience', ref: experienceRef }
+      ];
+      
+      for (const { id, ref } of sections) {
+        const element = ref.current;
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveTab(id as 'projects' | 'skills' | 'experience');
+            break;
+          }
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
   const messages = [
     "Hi! I'm Siphamandla Mahlangu.",
-    "Full Stack Developer | AI & Data Enthusiast",
-    "BSc Honours in IT @ University of Johannesburg",
-    "Based in Cape Town, South Africa"
+    "Full Stack Developer | AI & Data Enthusiast.",
+    "BSc Honours in IT @ University Of Johannesburg",
+    "Based in Cape Town, South Africa."
   ].join('\n\n');
   const typingSpeed = 50; // ms per character
 
@@ -59,25 +116,46 @@ const App: React.FC = () => {
           <div className="w-10 h-10 bg-[#00ff00] rounded-sm flex items-center justify-center font-black text-black text-xl shadow-[0_0_15px_rgba(0,255,0,0.3)]">
             {data.profile.name.charAt(0)}
           </div>
-          
+
           {/* Navigation */}
-          <nav className="flex-1 flex justify-center">
-            <div className="flex bg-[#111] p-1 rounded-md border border-[#222] mx-4">
-              {(['projects', 'skills', 'experience'] as const).map((tab) => (
-                <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
-                  className={`px-6 py-2 rounded text-xs font-bold transition-all ${
-                    activeTab === tab
-                      ? 'bg-[#00ff00] text-black shadow-lg shadow-[#00ff00]/10'
-                      : 'text-gray-500 hover:text-white'
-                  }`}
-                >
-                  {tab.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </nav>
+          {/* <div className="flex items-center gap-4">
+            <button
+              onClick={() => handleTabClick('projects')}
+              className={`text-xs font-black tracking-[0.2em] uppercase transition-colors ${activeTab === 'projects' ? 'text-[#00ff00]' : 'text-gray-600 hover:text-white'}`}
+            >
+              PROJECTS
+            </button>
+            <button
+              onClick={() => handleTabClick('skills')}
+              className={`text-xs font-black tracking-[0.2em] uppercase transition-colors ${activeTab === 'skills' ? 'text-[#00ff00]' : 'text-gray-600 hover:text-white'}`}
+            >
+              SKILLS
+            </button>
+            <button
+              onClick={() => handleTabClick('experience')}
+              className={`text-xs font-black tracking-[0.2em] uppercase transition-colors ${activeTab === 'experience' ? 'text-[#00ff00]' : 'text-gray-600 hover:text-white'}`}
+            >
+              EXPERIENCE
+            </button>
+          </div> */}
+          <nav className="sticky top-16 bg-[#050505]/95 backdrop-blur z-40 border-b border-[#111]">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="flex justify-center gap-8">
+            {(['projects', 'skills', 'experience'] as const).map(tab => (
+              <button
+                key={tab}
+                onClick={() => handleTabClick(tab)}
+                className={`py-4 px-2 text-xs font-black tracking-[0.2em] uppercase transition-all relative ${activeTab === tab ? 'text-[#00ff00]' : 'text-gray-600 hover:text-white'}`}
+              >
+                {tab}
+                {activeTab === tab && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#00ff00] shadow-[0_0_10px_rgba(0,255,0,0.5)]" />
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </nav>
           
           {/* Social Links */}
           <div className="flex items-center gap-4">
@@ -103,7 +181,8 @@ const App: React.FC = () => {
         </div>
       </header>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-8 space-y-5">
+
+      <main className="flex-1 w-full">
         {/* Terminal Section */}
         <div className="max-w-4xl mx-auto">
           <div className="bg-[#0a0a0a] rounded-lg border border-[#222] p-6 font-mono text-sm">
@@ -119,97 +198,93 @@ const App: React.FC = () => {
           </div>
         </div>
         
-        {/* Main Content */}
-        <div className="space-y-16 animate-in slide-in-from-bottom-6 duration-700">
-            {/* Centered Hero Section */}
-            <section className="flex flex-col items-center justify-center text-center py-20 max-w-4xl mx-auto space-y-8">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00ff00]/5 border border-[#00ff00]/20 text-[#00ff00] text-xs font-black tracking-widest uppercase">
-                BSc Honours in IT @ University Of Johannesburg
-              </div>
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00ff00]/5 border border-[#00ff00]/20 text-[#00ff00] text-xs font-black tracking-widest uppercase">
-                <FaMapMarkerAlt  />
-                <span>South Africa</span> 
-              </div>
-               <p className="text-xl text-400 leading-relaxed max-w-2xl">
-                Engineering <span className="text-[#00ff00]">Robust - Efficient - Safe</span> Digital Solutions.
-              </p>
-
-              {/* <p className="text-xl text-gray-400 leading-relaxed max-w-2xl">
-                {data.profile.bio}
-              </p> */}
-              {/* <div className="flex flex-wrap justify-center gap-6 pt-4">
-                <a href={data.profile.resumeUrl} className="px-10 py-4 bg-[#00ff00] text-black font-black rounded-sm hover:brightness-110 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(0,255,0,0.2)]">
-                  GET RESUME
-                </a>
-                <a href={`https://${data.profile.github}`} target="_blank" rel="noreferrer" className="px-10 py-4 border border-[#222] font-black rounded-sm hover:border-[#00ff00]/50 transition-all">
-                  VIEW GITHUB
-                </a>
-              </div> */}
-            </section>
-
-            {/* Content Tabs */}
-            <section className="space-y-1">
-              <nav className="flex justify-center gap-12 border-b border-[#111]">
-                {(['projects', 'skills', 'experience'] as const).map(tab => (
-                  <button
-                    key={tab}
-                    onClick={() => setActiveTab(tab)}
-                    className={`pb-4 text-xs font-black tracking-[0.2em] uppercase transition-all relative ${activeTab === tab ? 'text-[#00ff00]' : 'text-gray-600 hover:text-white'}`}
-                  >
-                    {tab}
-                    {activeTab === tab && (
-                      <div className="absolute bottom-[-1px] left-0 right-0 h-0.5 bg-[#00ff00] shadow-[0_0_10px_rgba(0,255,0,0.5)]" />
-                    )}
-                  </button>
-                ))}
-              </nav>
-
-              <div className="min-h-[500px]">
-                {activeTab === 'projects' && (
-                  <div className="grid md:grid-cols-2 gap-10 animate-in fade-in zoom-in-95 duration-500">
-                    {data.projects.map(p => <ProjectCard key={p.id} project={p} />)}
-                  </div>
-                )}
-                {activeTab === 'skills' && (
-                  <div className="space-y-16 animate-in fade-in duration-500">
-                    {Object.entries(groupedSkills).map(([category, skills]) => (
-                      <div key={category} className="space-y-6">
-                        <div className="flex items-center gap-4">
-                          <h3 className="text-[#00ff00] font-black tracking-[0.4em] text-sm uppercase">{category}</h3>
-                          <div className="flex-1 h-px bg-[#00ff00]/10" />
-                        </div>
-                        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                          {skills.map(s => <SkillBadge key={s.name} skill={s} />)}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {activeTab === 'experience' && (
-                  <div className="max-w-4xl mx-auto space-y-12 animate-in fade-in duration-500">
-                    {data.experience.map((exp, idx) => (
-                      <div key={idx} className="group relative pl-12 border-l-2 border-[#111] pb-16 last:pb-0">
-                        <div className="absolute left-[-9px] top-1 w-4 h-4 bg-[#050505] border-2 border-[#222] rounded-full group-hover:border-[#00ff00] transition-colors" />
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
-                          <h3 className="text-3xl font-black text-white tracking-tight">{exp.company}</h3>
-                          <span className="text-xs font-mono text-[#00ff00] bg-[#00ff00]/5 px-4 py-2 rounded-sm border border-[#00ff00]/20">{exp.period}</span>
-                        </div>
-                        <div className="text-xl font-bold text-[#00ff00] mb-8">{exp.position}</div>
-                        <ul className="grid sm:grid-cols-2 gap-x-12 gap-y-4">
-                          {exp.description.map((item, i) => (
-                            <li key={i} className="flex items-start gap-4 text-sm text-gray-500 leading-relaxed">
-                              <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00ff00]/40 shrink-0 shadow-[0_0_5px_rgba(0,255,0,0.2)]" />
-                              {item}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </section>
+        {/* Hero Section */}
+        <section className="flex flex-col items-center justify-center text-center py-12 max-w-4xl mx-auto space-y-8">
+          {/* <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00ff00]/5 border border-[#00ff00]/20 text-[#00ff00] text-xs font-black tracking-widest uppercase">
+            BSc Honours in IT @ University Of Johannesburg
           </div>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#00ff00]/5 border border-[#00ff00]/20 text-[#00ff00] text-xs font-black tracking-widest uppercase">
+            <FaMapMarkerAlt />
+            <span>South Africa</span> 
+          </div> */}
+          <p className="text-xl leading-relaxed max-w-2xl">
+            Engineering <span className="text-[#00ff00]">Robust - Efficient - Safe</span> Digital Solutions.
+          </p>
+        </section>
+
+        {/* Content Sections */}
+        <div className="min-h-[500px] w-full">
+          {/* Projects Section */}
+          <section 
+            id="projects" 
+            ref={projectsRef} 
+            className="max-w-7xl w-full py-12 mx-auto px-4"
+          >
+            <h2 className="text-2xl font-black tracking-wide mb-8 flex items-center">
+              <span className="text-[#00ff00] mr-2">#</span> Projects
+            </h2>
+            <div className="grid grid-cols-4 sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-3 w-full">
+              {data.projects.map((project, index) => (
+                <ProjectCard key={index} project={project} />
+              ))}
+            </div>
+          </section>
+
+          {/* Skills Section */}
+          <section 
+            id="skills" 
+            ref={skillsRef} 
+            className="min-h-screen flex flex-col py-20 max-w-7xl mx-auto w-full px-4"
+          >
+            <h2 className="text-2xl font-black tracking-wide mb-12 flex items-center">
+              <span className="text-[#00ff00] mr-2">#</span> Skills
+            </h2>
+            <div className="space-y-16 animate-in fade-in duration-500">
+              {Object.entries(groupedSkills).map(([category, skills]) => (
+                <div key={category} className="space-y-6">
+                  <div className="flex items-center gap-4">
+                    <h3 className="text-[#00ff00] font-black tracking-[0.4em] text-sm uppercase">{category}</h3>
+                    <div className="flex-1 h-px bg-[#00ff00]/10" />
+                  </div>
+                  <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+                    {skills.map(s => <SkillBadge key={s.name} skill={s} />)}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Experience Section */}
+          <section 
+            id="experience" 
+            ref={experienceRef} 
+            className="min-h-screen flex flex-col py-20 max-w-7xl mx-auto w-full px-4"
+          >
+            <h2 className="text-2xl font-black tracking-wide mb-12 flex items-center">
+              <span className="text-[#00ff00] mr-2">#</span> Experience
+            </h2>
+            <div className="max-w-4xl mx-auto space-y-12 animate-in fade-in duration-500">
+              {data.experience.map((exp, idx) => (
+                <div key={idx} className="group relative pl-12 border-l-2 border-[#111] pb-16 last:pb-0">
+                  <div className="absolute left-[-9px] top-1 w-4 h-4 bg-[#050505] border-2 border-[#222] rounded-full group-hover:border-[#00ff00] transition-colors" />
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-4">
+                    <h3 className="text-3xl font-black text-white tracking-tight">{exp.company}</h3>
+                    <span className="text-xs font-mono text-[#00ff00] bg-[#00ff00]/5 px-4 py-2 rounded-sm border border-[#00ff00]/20">{exp.period}</span>
+                  </div>
+                  <div className="text-xl font-bold text-[#00ff00] mb-8">{exp.position}</div>
+                  <ul className="grid sm:grid-cols-2 gap-x-12 gap-y-4">
+                    {exp.description.map((item, i) => (
+                      <li key={i} className="flex items-start gap-4 text-sm text-gray-500 leading-relaxed">
+                        <span className="mt-2 w-1.5 h-1.5 rounded-full bg-[#00ff00]/40 shrink-0 shadow-[0_0_5px_rgba(0,255,0,0.2)]" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
       </main>
 
       <footer className="border-t border-[#111] py-16 bg-[#050505]">

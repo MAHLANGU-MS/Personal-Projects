@@ -23,15 +23,30 @@ export const DEFAULT_PORTFOLIO: PortfolioData = {
     },
     {
       id: "2",
-      title: "Enterprise Workflow Logic",
-      description: "Designed and implemented logic workflows for 5 enterprise-grade digital solutions at Astron Energy, optimizing resource overhead.",
-      technologies: ["C#", ".NET Core", "MSSQL", "Agile"],
+      title: "Streaker App",
+      description: "Application that allows users to track their daily habits and create streaks.",
+      technologies: ["ReactNative", "Node.js", "MySQL", "Git"],
+      image: "https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      id: "3",
+      title: "Focus Flow",
+      description: "Application that facilitates focus during reading for users with ADHD",
+      technologies: ["Java", "React", "Python", "Node.js", "Git"],
+      image: "https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=800"
+    }
+    ,
+    {
+      id: "4",
+      title: "Genre Guesser",
+      description: "Application that allows users to guess the genre of a song.",
+      technologies: ["Python", "Flask", "MySQL", "React", "Git"],
       image: "https://images.unsplash.com/photo-1551288049-bbbda5366391?auto=format&fit=crop&q=80&w=800"
     }
   ],
   skills: [
     // FRONTEND
-    { name: "React.js", category: "frontend", level: 70 },
+    { name: "React.js", category: "frontend", level: 90 },
     { name: "JavaScript (ES6+)", category: "frontend", level: 85 },
     { name: "TypeScript", category: "frontend", level: 80 },
     { name: "Tailwind CSS", category: "frontend", level: 80 },
@@ -81,9 +96,10 @@ export const DEFAULT_PORTFOLIO: PortfolioData = {
       position: "IT Intern",
       period: "Jan 2025 - Present",
       description: [
-        "Designed backend logic and architecture for 5 enterprise-grade digital solutions.",
+        "UX Design & Implementation: Translated high-level workflows into elegant, user-friendly interfaces, resulting in increased employee satisfaction and data accuracy across multiple departments.",
         "Managed complex relational databases using MSSQL ensuring high integrity.",
         "Led full SDLC for internal tools within strict Agile deadlines.",
+        "Data Visualization Dashboards: Architected Power BI Dashboards to transform data sets into actionable insights, giving stakeholders a real-time view into their operations and enabling data-driven decisions.",
         "Optimized business operations reducing resource overhead via digital workflows."
       ]
     },
