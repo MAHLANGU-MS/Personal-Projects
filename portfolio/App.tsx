@@ -69,12 +69,12 @@ const App: React.FC = () => {
   }, []);
   
   const messages = [
-    "Hi! I'm Siphamandla Mahlangu.",
+    "  Hi! I'm Siphamandla Mahlangu.",
     "Full Stack Developer | AI & Data Enthusiast.",
     "BSc Honours in IT @ University Of Johannesburg",
     "Based in Cape Town, South Africa."
   ].join('\n\n');
-  const typingSpeed = 50; // ms per character
+  const typingSpeed = 60; // ms per character
 
   // Group skills by the specific requested categories
   const groupedSkills = {
@@ -86,26 +86,30 @@ const App: React.FC = () => {
     'LEARNING': data.skills.filter(s => s.category === 'learning')
   };
 
-  // Auto-type effect for terminal
-  useEffect(() => {
-    let currentIndex = 0;
-    const typeNextChar = () => {
-      if (currentIndex < messages.length) {
-        setTerminalText(prev => prev + messages.charAt(currentIndex));
-        currentIndex++;
-        setTimeout(typeNextChar, typingSpeed);
-      } else {
-        // Blinking cursor effect
-        const interval = setInterval(() => {
-          setShowCursor(prev => !prev);
-        }, 500);
-        return () => clearInterval(interval);
-      }
-    };
+// Auto-type effect for terminal
+useEffect(() => {
+  let currentIndex = 0;
+  let cursorInterval: ReturnType<typeof setInterval> | null = null;
 
-    const timer = setTimeout(typeNextChar, 1000); // Start typing after 1 second
-    return () => clearTimeout(timer);
-  }, [messages, typingSpeed]);
+  const typeNextChar = () => {
+    if (currentIndex < messages.length) {
+      setTerminalText(prev => prev + messages.charAt(currentIndex));
+      currentIndex++;
+      setTimeout(typeNextChar, typingSpeed);
+    } else {
+      cursorInterval = setInterval(() => {
+        setShowCursor(prev => !prev);
+      }, 500);
+    }
+  };
+
+  const timer = setTimeout(typeNextChar, 1000); // Start typing after 1 second
+
+  return () => {
+    clearTimeout(timer);
+    if (cursorInterval) clearInterval(cursorInterval);
+  };
+}, [messages, typingSpeed]);
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#d1d5db] flex flex-col selection:bg-[#00ff00] selection:text-black">

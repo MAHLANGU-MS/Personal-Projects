@@ -4,7 +4,7 @@ import { PortfolioData, Skill } from './types';
 export const DEFAULT_PORTFOLIO: PortfolioData = {
   profile: {
     name: "Siphamandla Mahlangu",
-    role: "Software Engineer | Web Dev | AI Enthusiast",
+    role: "Software Engineer  | AI Enthusiast",
     bio: "Honours-level IT Engineer specializing in robust backend architectures and high-stakes strategic logic. Focused on delivering high-performance, secure solutions for the South African Fintech sector.",
     location: "Cape Town, South Africa",
     email: "Msqmahlangu@gmail.com",
