@@ -1,81 +1,54 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Oswald:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap');
 
-/* @tailwind base; */
-/* @tailwind components; */
-/* @tailwind utilities; */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; /* Comment out or remove this default */
-  line-height: 1.5;
-  /* font-weight: 400; /* Will be controlled by Oswald specific weights */
-
-  /* Restore default color scheme, color, and background */
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  /* Remove display: flex and place-items: center */
-  /* display: flex; */
-  /* place-items: center; */
-  min-width: 320px;
-  min-height: 100vh;
-  font-family: 'Oswald', sans-serif; /* Set Oswald as base body font */
-  font-weight: 400; /* Default to Oswald 400 for body text */
-}
-
-h1, h2, h3, h4, h5, h6 { /* Apply Oswald to all heading levels by default */
-  font-family: 'Oswald', sans-serif;
-  /* font-size: 3.2em; /* Remove or adjust generic h1 style if panel h3 needs different base */
-  /* line-height: 1.1; */
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  /* Restore overriding styles for light mode */
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 36, 36, 36;
+    --background-end-rgb: 0, 0, 0;
   }
-  a:hover {
-    color: #747bff;
+
+  @media (prefers-color-scheme: light) {
+    :root {
+      --foreground-rgb: 36, 36, 36;
+      --background-start-rgb: 255, 255, 255;
+      --background-end-rgb: 214, 219, 220;
+    }
   }
+
+  body {
+    color: rgb(var(--foreground-rgb));
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgb(var(--background-end-rgb))
+      )
+      rgb(var(--background-start-rgb));
+    font-family: 'Oswald', sans-serif;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-bold;
+  }
+
+  a {
+    @apply text-blue-500 hover:text-blue-400 transition-colors;
+  }
+
   button {
-    background-color: #f9f9f9;
+    @apply rounded-lg border border-transparent px-5 py-2.5 text-sm font-medium transition-colors
+           bg-gray-900 text-white hover:bg-gray-800 focus:outline-none focus:ring-4
+           focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700;
+  }
+
+  @media (prefers-color-scheme: light) {
+    button {
+      @apply bg-white text-gray-900 hover:bg-gray-100 focus:ring-gray-200
+             dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800 dark:focus:ring-gray-700;
+    }
   }
 }

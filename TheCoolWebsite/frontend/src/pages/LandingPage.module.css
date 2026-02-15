@@ -76,8 +76,8 @@
 }
 
 .panel {
-  width: 100%; /* Will take the width of the grid cell */
-  height: 20rem; /* Adjusted height for grid - can be tweaked */
+  width: 70%; /* Will take the width of the grid cell */
+  height: 14rem; /* Adjusted height for grid - can be tweaked */
   border-radius: 0.5rem; 
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); 
   /* background-color: #a855f7; /* Purple-500 - this will be overridden per card */
@@ -90,7 +90,7 @@
   /* margin-bottom: 2rem; /* REMOVE: Grid gap will handle spacing */
   text-decoration: none; /* Ensure Link doesn't have underline */
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, border-color 0.3s ease-in-out; /* Smooth transitions */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Added subtle white border */
+  border: 5px solid rgba(255, 255, 255, 0.2); /* Added subtle white border */
   overflow: hidden; /* Important: Clip the animating paragraph */
   position: relative; /* Useful for precisely positioning child elements if needed, and for stacking context */
 }

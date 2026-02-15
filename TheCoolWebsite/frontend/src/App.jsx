@@ -7,7 +7,7 @@ import LandingPage from './pages/LandingPage';
 import PsychologyPage from './pages/PsychologyPage';
 import SportsPage from './pages/SportsPage';
 import GamblingPage from './pages/GamblingPage';
-import MusicPage from './pages/MusicPage';
+import Music from './pages/Music';
 
 import './App.css';
 
@@ -19,7 +19,7 @@ function App() {
       <Route path="/psychology" element={<PsychologyPage />} />
       <Route path="/sports" element={<SportsPage />} />
       <Route path="/gambling" element={<GamblingPage />} />
-      <Route path="/music" element={<MusicPage />} />
+      <Route path="/music" element={<Music />} />
       {/* Add other routes here later, e.g., specific topic pages */}
     </Routes>
   );
